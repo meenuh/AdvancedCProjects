@@ -1,0 +1,87 @@
+*Bit Manipulation*
+bit shifting:
+    - << left shift
+    - >> right shift
+
+    should always shift with unsigned types because ANSI C says it is up to the
+    implementor of the compiler whether the right shift operator shifts zeroes
+    in from the left or sign bits.
+        -if you use unsigned data types, zeroes are always shifted in. whether
+        using left or right shift.
+    exm 1:
+    unsigned short a = 3;           0000 0000 0000 0011             3
+    usigned short d;
+
+    d = a << 3;                     0000 0000 0000 0110 1 shift     6
+                                    0000 0000 0000 1100 2 shift     12
+    d is 24                         0000 0000 0001 1000 3 shift     24
+
+    exm 2:
+    unsigned short b = 7;           0000 0000 0000 0111             7
+    unsigned short d;
+
+    d = b >> 2;                     0000 0000 0000 0011 1 shift     3
+    d is 1                          0000 0000 0000 0001 2 shift     1
+
+bit rotation:
+exm: 1000 0000 0000 0001
+    if we have a string of bits and we want to rotate the bits by two bits to
+    the RIGHT it would be:
+
+    1100 0000 0000 0000     1 rotation
+    0110 0000 0000 0000     2 rotation
+
+    now rotate to the LEFT by 3 bits
+    1100 0000 0000 0000     1 rotation
+    1000 0000 0000 0001     2 rotation
+    0000 0000 0000 0011     3 rotation
+
+    unsigned short rightrot(unsigned short wrd, int numbits)
+    {
+        unsigned short nleft;
+
+        nleft = wrd << (sizeof(short) * 8 - numbits);
+        wrd = wrd >> numbits;
+        wrd = wrd | nleft;
+        return wrd;
+    }
+
+    exm: 
+    unsigned short word = 3;
+    rightrot(word , 1);
+
+    nleft = wrd << (sizeof(short) * 8 - numbits)  0000 0000 0000 0011
+                                                  ushort = 2 => 2 * 8 = 16
+                                                  16 - 1 = 15
+
+          shifted 15 times to the left:           nleft = 1000 0000 0000 0000
+
+    word = word >> numbits;                       0000 0000 0000 0011 
+    *word is 3, numbits is 1.
+    shifted 1 to the right                        word = 0000 0000 0000 0001
+
+    word = word | nleft;                    word: 0000 0000 0000 0000 0001
+                                           nleft: 1000 0000 0000 0000 0000
+                                          (or)| : 1000 0000 0000 0000 0001
+
+                  rotated right once word is now: 1000 0000 0000 0000 0001
+
+    unsigned short leftrot(unsigned short wrd, int numbits)
+    {
+        unsigned short nleft;
+
+        nleft = wrd >> (sizeof(short) - numbits);
+        wrd <<= numbits;
+        wrd |= nleft;
+
+        return wrd;
+    }
+
+    same as right rotation except:
+    right rotation: wrd >>= numbits.
+    left rotation: wrd <<= numbits;
+
+
+
+    
+

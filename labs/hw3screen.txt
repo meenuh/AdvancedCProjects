@@ -1,0 +1,100 @@
+meenuh@mumble ~/school/26b/labs $ ./hw3
+1. Add records to database.
+2. Look up a record.
+3. Quit.
+
+Enter selection:
+1
+Enter file name.
+haaa.ha
+Batch insertion file could not be opened.
+1. Add records to database.
+2. Look up a record.
+3. Quit.
+
+Enter selection:
+1
+Enter file name.
+hw3in.txt
+Bucket overflow! Record for ASDALL,TEXAS,99,77 rejected.
+1. Add records to database.
+2. Look up a record.
+3. Quit.
+
+dd records to database.
+2. Look up a record.
+3. Quit.
+
+
+
+Enter selection:
+1
+Enter file name.
+haaa.ha
+Batch insertion file could not be opened.
+1. Add records to database.
+2. Look up a record.
+3. Quit.
+
+Enter selection:
+1
+Enter file name.
+hw3in.txt
+Bucket overflow! Record for ASDALL,TEXAS,99,77 rejected.
+1. Add records to database.
+2. Look up a record.
+3. Quit.
+
+Enter selection:
+2
+Enter city,state.
+san jose, california
+Found: SAN JOSE,CALIFORNIA,80,56
+1. Add records to database.
+2. Look up a record.
+3. Quit.
+
+Enter selection:
+2
+Enter city,state.
+haha
+Missing state.
+Enter city,state.
+   ,
+Missing city.
+Enter city,state.
+daLLas   ,   TeXas
+Found: DALLAS,TEXAS,97,72
+1. Add records to database.
+2. Look up a record.
+3. Quit.
+
+Enter selection:
+dallas,,texas
+Invalid character in selection.
+1. Add records to database.
+2. Look up a record.
+3. Quit.
+
+Enter selection:
+2
+Enter city,state.
+dallas,,texas
+Illegal extra token.
+Enter city,state.
+las vegas, nevada
+Found: LAS VEGAS,NEVADA,109,83
+1. Add records to database.
+2. Look up a record.
+3. Quit.
+
+Enter selection:
+2a
+Invalid character in selection.
+1. Add records to database.
+2. Look up a record.
+3. Quit.
+
+Enter selection:
+3
+

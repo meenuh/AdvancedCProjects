@@ -1,0 +1,27 @@
+meenuh@mumble ~/school/26b/labs $ ./hw3
+1. Add records to database.
+2. Look up a record.
+3. Quit.
+
+Enter selection:
+2
+Enter city,state.
+  san  jose  ,   california
+  SAN JOSE,CALIFORNIA
+  Found: SAN JOSE,CALIFORNIA,80,56
+  1. Add records to database.
+  2. Look up a record.
+  3. Quit.
+
+  Enter selection:
+  2
+  Enter city,state.
+  minot  ,  north  dakota
+  MINOT,NORTH DAKOTA
+  Found: MINOT,NORTH DAKOTA,86,54
+  1. Add records to database.
+  2. Look up a record.
+  3. Quit.
+
+  Enter selection:
+  3

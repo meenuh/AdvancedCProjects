@@ -1,0 +1,10 @@
+Arizona,Flagstaff:82.50
+Arizona,Phoenix:108.00
+Arizona,Tucson:103.00
+California,Los Angeles:80.33
+California,San Francisco:66.00
+California,Yreka:100.00
+Oregon,Portland:80.50
+Oregon,Salem:86.00
+Pennsylvania,Philadelphia:88.50
+Pennsylvania,Pittsburgh:89.00

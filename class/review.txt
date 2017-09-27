@@ -1,0 +1,13 @@
+*FINAL EXAM*
+1. 20 pts: exercise 1 page 180 Bitwise ops
+2. 30 pts: exercise 2 pg 217(multidim. arrays), 
+           exercise 5 pg 239(complex declarations) 
+           or combo of 2 exercises
+3. 23 pts: problem 10 pg 241 structs & pointers to functions
+           OR problem 7 pg 240 binary files and time function
+4. 25 pts:
+           problem 3: pg 270 array of strings & files OR
+           problem 10: pg 202 recursion and binary files OR
+           problem 7: pg 201 binary search tree processing
+
+

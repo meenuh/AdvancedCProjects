@@ -1,0 +1,36 @@
+meenuh@mumble ~/school/26b/labs $ ./hw2 hw2in.txt
+Enter symbol or * to skip:
+asdlfkjlasfj
+Not found.
+Enter symbol or * to skip:
+aaaa
+Enter number of quotes:
+5
+3.50
+2.40
+5.90
+5 requested. Only 3 found.
+Enter symbol or * to skip:
+1234
+Not found.
+Enter symbol or * to skip:
+AbCd
+Enter number of quotes:
+2
+112.10
+101.50
+Enter symbol or * to skip:
+*
+Enter first ticker symbol or * to quit:
+aaaa
+Enter second ticker symbol or * to quit:
+efGh
+AAAA: 3.50
+ABCD: 112.10
+BBG: 17.90
+BGEIX: 9.76
+CSCO: 23.05
+EFGH: 40.20
+Enter first ticker symbol or * to quit:
+*
+

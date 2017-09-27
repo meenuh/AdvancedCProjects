@@ -1,0 +1,414 @@
+Cross reference listing made at: Thu Jun 16 19:31:30 2011
+
+EOF                   216  
+FILE                  43   45   54   171  210  
+FLUSH                 22   70   84   104  123  
+Fclose                221  
+Fopen                 178  
+L_NODE                27   39   40   44   45   46   48   50   55   188  190  192  
+                      210  213  234  236  244  282  284  297  299  
+MAXLINE               23   57   61   212  
+Malloc                192  193  244  245  253  268  
+NULL                  89   254  305  
+SENTINEL              24   195  303  
+S_NODE                26   32   38   47   56   253  264  266  268  300  301  
+argc                  43   52   63   171  173  
+argv                  43   52   63   171  178  
+back                  40   152  155  198  249  250  251  313  314  
+break                 92   107  115  126  134  
+char                  37   43   46   48   49   52   57   61   171  193  212  234  
+                      245  282  325  327  
+checkAndGetArgs       43   63   171  
+count                 58   79   80   83   91   
+createList            45   65   210  
+current               236  238  240  241  248  249  250  251  
+define                22   23   24   
+do                    100  
+else                  97   115  134  150  242  
+endNode               55   130  132  140  141  143  151  152  
+exit                  176  
+find                  48   74   111  130  238  282  
+float                 31   47   60   214  264  
+for                   87   329  
+forw                  39   143  146  197  248  250  284  287  299  312  
+fpin                  43   45   54   63   65   171  178  210  216  221  
+free                  307  313  314  317  318  
+freeMemory            50   162  297  
+fscanf                216  
+getchar               22   
+i                     58   87   91   
+if                    76   106  113  118  125  132  138  140  173  240  309  
+include               16   17   18   19   20   
+initList              44   64   188  
+insert                46   218  234  
+int                   43   52   58   171  
+list                  45   46   48   50   55   64   65   74   111  130  162  190  
+                      192  193  195  197  198  200  210  218  234  238  282  284  
+                      297  299  
+listItr               55   74   76   78   
+lmover                299  300  303  312  313  314  317  318  
+lnode                 27   35   
+main                  52   
+mover                 284  286  287  289  327  329  330  
+new                   213  218  219  236  241  244  245  246  248  249  250  251  
+                      253  254  256  266  268  269  271  272  
+next                  32   89   95   254  271  301  310  
+price                 31   47   60   94   145  154  214  216  219  264  269  
+printf                67   82   91   94   97   101  114  120  133  145  154  175  
+pushPrice             47   219  264  
+return                163  180  200  222  256  274  289  
+sBuffer               212  216  218  
+scanf                 68   83   102  121  
+scur                  301  308  309  310  
+sizeof                192  244  253  268  
+snode                 26   29   
+sprev                 300  301  305  307  308  
+stack                 38   47   78   80   142  147  151  156  219  253  254  264  
+                      271  272  274  300  
+stackItr              56   78   94   95   145  147  151  154  156  
+startNode             55   111  113  140  143  145  146  147  152  154  155  156  
+stockSym              37   61   76   113  132  140  141  145  154  193  195  240  
+                      245  246  286  303  313  317  
+strcmp                68   76   106  113  125  132  140  240  286  
+strcpy                246  
+strlen                245  
+struct                26   27   29   35   
+symbol                46   48   49   234  238  240  245  246  282  286  325  329  
+toupper               330  
+typedef               26   27   
+upper                 49   72   109  128  325  
+userInput             57   68   72   74   76   102  106  109  111  113  118  121  
+                      125  128  130  132  138  160  
+void                  43   45   49   50   171  210  297  325  
+while                 22   67   80   101  120  143  152  160  216  286  303  305  
+1    : /*
+2    :  * This program takes a file and enters the stock ticker symbol into a
+3    :  * circularly doubly linked list which contains one sentinel. It pushes the
+4    :  * prices into a stack. It allows the user to enter a stock ticker symbol and
+5    :  * the number of latest prices the user wants to see and prints it until the
+6    :  * user enters the sentinel to skip. It then asks the user for 2 stock ticker
+7    :  * symbols and prints all the results to and from the first to second along
+8    :  * with the most recent price. It stops when the user enters the sentinel.
+9    :  *
+10   :  * Mina Yi
+11   :  * Homework 2
+12   :  * May 3, 2011
+13   :  *
+14   :  */
+15   : 
+16   : #include <stdio.h>
+17   : #include <stdlib.h>
+18   : #include <string.h>
+19   : #include <ctype.h>
+20   : #include "perry.h"
+21   : 
+22   : #define FLUSH while(getchar() != '\n')
+23   : #define MAXLINE 6
+24   : #define SENTINEL '\177'
+25   : 
+26   : typedef struct snode S_NODE;
+27   : typedef struct lnode L_NODE;
+28   :     
+29   : struct snode
+30   : {
+31   :     float price;
+32   :     S_NODE *next;
+33   : };
+34   : 
+35   : struct lnode
+36   : {
+37   :     char *stockSym;
+38   :     S_NODE *stack;                      
+39   :     L_NODE *forw;
+40   :     L_NODE *back;
+41   : };
+42   : 
+43   : void checkAndGetArgs(int argc, char **argv, FILE **fpin);
+44   : L_NODE *initList();
+45   : void createList(FILE *fpin, L_NODE *list);
+46   : L_NODE *insert(L_NODE *list, char *symbol);
+47   : S_NODE *pushPrice(S_NODE *stack, float price);
+48   : L_NODE *find(char *symbol, L_NODE *list);
+49   : void upper(char *symbol);
+50   : void freeMemory(L_NODE *list);
+51   : 
+52   : int main(int argc, char **argv)
+53   : {
+54   :     FILE *fpin;
+55   :     L_NODE *list, *listItr, *startNode, *endNode;
+56   :     S_NODE *stackItr;
+57   :     char userInput[MAXLINE];
+58   :     int count, i;
+59   : 
+60   :     float price; 
+61   :     char stockSym[MAXLINE];
+62   : 
+63   :     checkAndGetArgs(argc, argv, &fpin);
+64   :     list = initList();
+65   :     createList(fpin, list); 
+66   :    
+67   :     while(printf("Enter symbol or * to skip:  \n"),
+68   :             scanf("%5s", userInput), strcmp(userInput, "*") != 0)
+69   :     {
+70   :         FLUSH;
+71   :         
+72   :         upper(userInput);
+73   : 
+74   :         listItr = find(userInput, list);
+75   : 
+76   :         if(strcmp(userInput, listItr->stockSym) == 0)
+77   :         {
+78   :             stackItr = listItr->stack;
+79   :             count = -1;
+80   :             while(count < 0)
+81   :             {
+82   :                 printf("Enter number of quotes: \n");
+83   :                 scanf("%d", &count);
+84   :                 FLUSH;
+85   :             }
+86   : 
+87   :             for (i=0; i < count; i++)
+88   :             {   
+89   :                 if (stackItr->next == NULL)
+90   :                 {
+91   :                     printf("%d requested. Only %d found.\n", count, i);
+92   :                     break;
+93   :                 }
+94   :                 printf("%.2f\n", stackItr->price);
+95   :                 stackItr = stackItr->next;
+96   :             }
+97   :         } else printf("Not found.\n");
+98   :     }
+99   : 
+100  :     do {
+101  :         while(printf("Enter first ticker symbol or * to quit: \n"), 
+102  :                 scanf("%5s", userInput))
+103  :         {
+104  :             FLUSH;
+105  : 
+106  :             if (strcmp(userInput, "*") == 0)
+107  :                 break;
+108  : 
+109  :             upper(userInput);
+110  : 
+111  :             startNode = find(userInput, list);
+112  : 
+113  :             if(strcmp(userInput, startNode->stockSym) != 0)
+114  :                 printf("Not found.\n");
+115  :             else break;
+116  :         }
+117  : 
+118  :         if (*userInput != '*') 
+119  :         {
+120  :             while(printf("Enter second ticker symbol or * to quit: \n"), 
+121  :                     scanf("%5s", userInput))
+122  :             {
+123  :                 FLUSH;
+124  : 
+125  :                 if (strcmp(userInput, "*") == 0)
+126  :                     break;
+127  : 
+128  :                 upper(userInput);
+129  : 
+130  :                 endNode = find(userInput, list);
+131  : 
+132  :                 if (strcmp(userInput, endNode->stockSym) != 0)
+133  :                     printf("Not found.\n");
+134  :                 else break;
+135  :             }
+136  :         }
+137  : 
+138  :         if(*userInput != '*')
+139  :         {
+140  :             if(strcmp(startNode->stockSym, endNode->stockSym) < 0)
+141  :             {
+142  :                 stackItr = startNode->stack;
+143  :                 while(startNode != endNode->forw)
+144  :                 {
+145  :                     printf("%s: %.2f\n", startNode->stockSym, stackItr->price );
+146  :                     startNode = startNode->forw;
+147  :                     stackItr = startNode->stack;;
+148  :                 }
+149  : 
+150  :             } else {
+151  :                 stackItr = endNode->stack;
+152  :                 while(startNode != endNode->back)
+153  :                 {
+154  :                     printf("%s: %.2f\n", startNode->stockSym, stackItr->price);
+155  :                     startNode = startNode->back;
+156  :                     stackItr = startNode->stack;
+157  :                 }
+158  :             }
+159  :         }
+160  :     } while (*userInput != '*');
+161  :    
+162  :     freeMemory(list);
+163  :     return 0;
+164  : }
+165  : 
+166  : /*
+167  :  * checAndGetArgs takes in argc, argv, and the address of fpin. It opens the
+168  :  * file for reading via command line argument. This function does not return
+169  :  * anything.
+170  :  */
+171  : void checkAndGetArgs(int argc, char **argv, FILE **fpin)
+172  : {
+173  :     if(argc != 2)
+174  :     {
+175  :         printf("Incorrect number of command line arguments!\n");
+176  :         exit(1);
+177  :     }
+178  :     *fpin = Fopen(argv[1], "r");
+179  : 
+180  :     return;
+181  : }
+182  : 
+183  : /*
+184  :  * initList does not take any arguments. It initializes the first node in
+185  :  * the circularly doubly linked list to the sentinel. It sets the forw and back
+186  :  * pointers to point to itself. It returns list.
+187  :  */
+188  : L_NODE *initList()
+189  : {
+190  :     L_NODE *list;
+191  : 
+192  :     list = (L_NODE *)Malloc(sizeof(L_NODE));
+193  :     list->stockSym = (char *)Malloc(2);
+194  : 
+195  :     *list->stockSym = SENTINEL;
+196  : 
+197  :     list->forw = list;
+198  :     list->back = list;
+199  : 
+200  :     return list;
+201  : }
+202  : 
+203  : /*
+204  :  * createList takes in the file pointer fpin and the circularly doubly linked
+205  :  * list called list. It scans in the name of the ticker symbol and the price
+206  :  * and calls insert to insert the new node into the circularly doubly linked
+207  :  * list. After it has been inserted or not inserted because it is a duplicate,
+208  :  * it uses the stack pointer to push the price into stack.
+209  :  */
+210  : void createList(FILE *fpin, L_NODE *list)
+211  : {
+212  :     char sBuffer[MAXLINE];
+213  :     L_NODE *new;
+214  :     float price;
+215  : 
+216  :     while(fscanf(fpin, "%s %f", sBuffer, &price) != EOF)
+217  :     {
+218  :         new = insert(list, sBuffer);
+219  :         new->stack = pushPrice(new->stack, price);
+220  :     }
+221  :     Fclose(fpin);
+222  :     return;
+223  : }
+224  : 
+225  : /*
+226  :  * insert takes in the list and the ticker symbol. It calls the find function
+227  :  * to find the position the node should be inserted to and assigns that postion
+228  :  * to current. It compares the stockSym and the symbol, if it compares to 0,
+229  :  * that means it already exists and so it assigns the position of current to
+230  :  * new. If it does not compare to 0, it creates a new node, copys the string to
+231  :  * the node, reassigns the pointers to link it in, and it initiliazes the new
+232  :  * stack since it did not exist before. It returns new.
+233  :  */
+234  : L_NODE *insert(L_NODE *list, char *symbol)
+235  : {
+236  :     L_NODE *new, *current;
+237  : 
+238  :     current = find(symbol, list);
+239  : 
+240  :     if(strcmp(symbol, current->stockSym) == 0)
+241  :         new = current;
+242  :     else
+243  :     {
+244  :         new = (L_NODE *)Malloc(sizeof(L_NODE));
+245  :         new->stockSym = (char *)Malloc(strlen(symbol) + 1);
+246  :         strcpy(new->stockSym, symbol);
+247  : 
+248  :         new->forw = current;
+249  :         new->back = current->back;
+250  :         current->back->forw = new;
+251  :         current->back = new;
+252  : 
+253  :         new->stack = (S_NODE *)Malloc(sizeof(S_NODE));
+254  :         new->stack->next = NULL;
+255  :     }
+256  :     return new;
+257  : }
+258  : 
+259  : /*
+260  :  * pushPrice takes in the stack pointer and the price. It creates a new node
+261  :  * and puts the price in and reassigns the pointer. It then returns the stack
+262  :  * pointer.
+263  :  */
+264  : S_NODE *pushPrice(S_NODE *stack, float price)
+265  : {
+266  :     S_NODE *new;
+267  : 
+268  :     new = (S_NODE *)Malloc(sizeof(S_NODE));
+269  :     new->price = price;
+270  : 
+271  :     new->next = stack;
+272  :     stack = new;
+273  : 
+274  :     return stack;
+275  : }
+276  : 
+277  : /*
+278  :  * The find function traverses the circularly doubly linked list to find the
+279  :  * desired stock symbol and also finds the position it should be in when
+280  :  * inserting. It returns a pointer (mover) to the position.
+281  :  */
+282  : L_NODE *find(char *symbol, L_NODE *list)
+283  : {
+284  :     L_NODE *mover = list->forw;
+285  : 
+286  :     while(strcmp(symbol, mover->stockSym) > 0)
+287  :         mover = mover->forw;
+288  : 
+289  :     return mover;
+290  : }
+291  : 
+292  : /*
+293  :  * freeMemory takes in the circularly doubly linked list. It traverses it,
+294  :  * frees the stack, then the string and the linked list node itself. This
+295  :  * function does not return anything.  
+296  :  */
+297  : void freeMemory(L_NODE *list)
+298  : {
+299  :     L_NODE *lmover = list->forw;
+300  :     S_NODE *sprev = lmover->stack;
+301  :     S_NODE *scur = sprev->next;
+302  : 
+303  :     while(*lmover->stockSym != SENTINEL)
+304  :     {
+305  :         while(sprev != NULL)
+306  :         {
+307  :             free(sprev);
+308  :             sprev = scur;
+309  :             if(scur)
+310  :                 scur = scur->next;
+311  :         }
+312  :         lmover = lmover->forw;
+313  :         free(lmover->back->stockSym);
+314  :         free(lmover->back);
+315  :     }  
+316  : 
+317  :     free(lmover->stockSym);
+318  :     free(lmover);
+319  : } 
+320  : 
+321  : /*
+322  :  * upper takes the string from the user and uppers it in order to ensure user
+323  :  * validation. This function does not return anything.
+324  :  */
+325  : void upper(char *symbol)
+326  : {
+327  :     char *mover;
+328  : 
+329  :     for(mover = symbol; *mover; mover++)
+330  :         *mover = toupper(*mover);
+331  : }

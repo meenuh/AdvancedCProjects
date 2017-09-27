@@ -1,0 +1,68 @@
+4/12/11
+
+-typedef, #define etc, need to be redeclared in all seperate source files.
+    -they only exist from when they are declared to the end of that program.
+*extra credit: exercises due Thuesday.
+                chp 2: exercises 1-10.(not to turn in)
+
+~chp 3(contains 4 data structures):~
+Linear dynamic data structures: linked lists, stacks, queues
+    -linear list: a list in which each element has a unique successor.
+    -Non linear list: tree & graph
+
+Stack; last in first out
+    -insert; push
+    -delete; pop
+Queue; first in first out
+    -same as vectors, can't delete from mid. only from front.
+    -insert; enqueue
+    -delete; dequeue
+
+Linked Lists:
+*single*:
+     ~using a header struct~
+     header structure contains the counter(keeps track of # of nodes) & pointer
+     first node in list. Also maybe contain general info about the
+     list.(metadata)
+     -is a different type than the rest of the nodes
+     ~Sentinel node/dummy node~
+     it does not contain any data
+     is the same type as the nodes but is empty
+
+4/14/11
+
+node in doubly linked list: has 2 pointers. one points forwards, other
+backwards.
+
+*doubly linked lists*
+    ~basic operations~
+        initialize, insert, delete, find, traverse(2 traversals. 1 forward
+        other backward), destroy
+    -none of the pointers will ever be NULL since has dummy and header trailer.
+    ~delete~
+        -search for item you want to delete.
+        exm: pdel->back->forward = pdel->forw.
+             pdel->forw->back = pdel->back
+             free(pdel)
+
+        b/c doubly linked list, will have access to previous and after nodes 
+        without use of pre and cur pointers like with single linked list.
+
+*circularly doubly linked list w/ 1 sentinel node*
+    -start with rear node (exm: '\177')
+    -start with 2 pointers. pre & current both point at sentinel. starts with
+    pre and cur pointer at the sentinel node.
+
+4/21
+
+*Hashing*
+    -find/locate data with only one test
+    solution 1:
+        store data in the original order (inefficient takes atleast 4 steps 
+        to find b/c using linear search)
+    solution 2:
+        store data using student ID as array index(one step search)
+        
+fseek: seek current position 0 bytes will flush.
+
+
